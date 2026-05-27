@@ -6,7 +6,7 @@ const db = require('../database');
 const { getLevelColor } = require('../utils/xpHandler');
 
 const DUEL_EXPIRE_MS  = 5 * 60_000; // 5 min to accept
-const GAME_DURATION   = 30_000;      // 30 seconds of play
+const GAME_DURATION   = 45_000;      // 45 seconds of play
 const MIN_WORD_LENGTH = 3;
 
 module.exports = {
