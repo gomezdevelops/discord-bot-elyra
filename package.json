@@ -1,0 +1,21 @@
+{
+  "name": "discord-xp-leveling-bot",
+  "version": "1.0.0",
+  "description": "A comprehensive Discord XP and Leveling bot built with Discord.js v14 and SQLite",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy": "node src/deploy-commands.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.26.4",
+    "dotenv": "^16.6.1",
+    "node-sqlite3-wasm": "^0.8.57",
+    "sql.js": "^1.14.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+}
