@@ -43,16 +43,6 @@ module.exports = {
       if (opponent.id === userId)  return interaction.editReply({ embeds: [errEmbed('You can\'t duel yourself!')] });
       if (opponent.bot)            return interaction.editReply({ embeds: [errEmbed('You can\'t duel a bot!')] });
 
-      const config   = db.getGuildConfig(guildId);
-      const cooldown = db.getDuelCooldown(userId, guildId);
-      if (cooldown) {
-        const remaining = config.duel_cooldown_ms - (Date.now() - cooldown.last_duel);
-        if (remaining > 0) {
-          const secs = Math.ceil(remaining / 1000);
-          return interaction.editReply({ embeds: [errEmbed(`You're on cooldown! Wait **${secs}s** before challenging again.`)] });
-        }
-      }
-
       const existing = db.getPendingDuelByChallenger(guildId, userId);
       if (existing && Date.now() - existing.created_at < DUEL_EXPIRE_MS) {
         return interaction.editReply({ embeds: [errEmbed('You already have a pending challenge! Use `/duel cancel` to cancel it.')] });
@@ -393,8 +383,6 @@ async function endDuelGame(gameState, channel, client) {
   } else {
     const { actualWager } = db.recordDuelResult(guildId, winnerId, loserId, wager);
     db.resolveDuel(duelId, winnerId);
-    db.setDuelCooldown(challenger, guildId);
-    db.setDuelCooldown(opponent, guildId);
     description = `🏆 **<@${winnerId}> wins the duel!** They take **${actualWager.toLocaleString()} XP** from <@${loserId}>!`;
     xferText = `${actualWager.toLocaleString()} XP transferred`;
   }
