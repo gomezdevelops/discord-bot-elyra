@@ -72,7 +72,7 @@ module.exports = {
               { name: '🗡️ Challenger', value: `<@${userId}>\nLv. ${challengerData.level} · ${challengerData.xp.toLocaleString()} XP`, inline: true },
               { name: '🛡️ Opponent',   value: `${opponent}\nLv. ${opponentData.level} · ${opponentData.xp.toLocaleString()} XP`, inline: true },
             )
-            .setFooter({ text: 'How it works: when accepted, you\'ll race to form the most words from a set of random letters in 30 seconds.' })
+            .setFooter({ text: 'How it works: when accepted, you\'ll race to form the most words from a set of random letters in 45 seconds.' })
             .setTimestamp(),
         ],
       });
@@ -133,7 +133,7 @@ module.exports = {
               `<@${duel.challenger}> vs <@${userId}>\n\n` +
               `The battle begins in **3 seconds...**\n\n` +
               `**Wager:** ${duel.wager.toLocaleString()} XP\n` +
-              `**Duration:** 30 seconds`
+              `**Duration:** 45 seconds`
             )
             .setFooter({ text: 'Form as many words as possible from the letters below. Min 3 letters. First to claim a word wins it.' })
             .setTimestamp(),
@@ -151,7 +151,7 @@ module.exports = {
             .setDescription(
               `**Your letters:**\n\n${letterDisplay}\n\n` +
               `Type words using only these letters in this channel!\n` +
-              `⏱️ **30 seconds on the clock.**`
+              `⏱️ **45 seconds on the clock.**`
             )
             .addFields(
               { name: '📜 Rules', value: '• Minimum **3 letters** per word\n• Each letter can only be used as many times as it appears\n• First to type a word claims it — duplicates don\'t count\n• Real English words only' },
@@ -166,7 +166,7 @@ module.exports = {
       gameState.gameMsg = gameMsg;
 
       // ── Countdown updates ───────────────────────────────────────────────
-      const tickTimes = [20000, 10000, 5000]; // ms after start to post warnings
+      const tickTimes = [30000, 35000, 40000];; // ms after start to post warnings
       for (const t of tickTimes) {
         setTimeout(async () => {
           if (!gameState.active) return;
@@ -177,7 +177,7 @@ module.exports = {
         }, t);
       }
 
-      // ── End game after 30s ──────────────────────────────────────────────
+      // ── End game after 45s ──────────────────────────────────────────────
       setTimeout(() => endDuelGame(gameState, channel, client), GAME_DURATION);
 
       return; // game is now live, index.js handles word messages
