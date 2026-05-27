@@ -22,7 +22,7 @@ module.exports = {
           new EmbedBuilder()
             .setColor(0x95A5A6)
             .setTitle('📊 Leaderboard')
-            .setDescription('No users have earned XP yet. Start chatting!')
+            .setDescription('No users have earned XP yet. Start chatting or join a voice channel!')
             .setTimestamp(),
         ],
       });
@@ -36,7 +36,7 @@ module.exports = {
       try {
         const member = await interaction.guild.members.fetch(row.user_id).catch(() => null);
         if (member) displayName = member.displayName;
-      } catch { /* keep mention fallback */ }
+      } catch {  }
 
       const medal  = MEDALS[i] ?? `**\`${i + 1}.\`**`;
       const { current, needed } = db.getProgress(row.xp, row.level);
